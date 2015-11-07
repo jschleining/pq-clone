@@ -1,7 +1,6 @@
-angular.module('pq-clone', ['ui.router'])
+angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 
 .config(function config($stateProvider){
-	console.log('State Provider is called');
 	$stateProvider.state('index', {
 		url: '',
 		controller: 'GameController as gc',
@@ -9,54 +8,59 @@ angular.module('pq-clone', ['ui.router'])
 	});
 })
 
-.controller('GameController', function GameController() {
-
-	console.log('Controller is called');
+.controller('GameController', ['Assets', function GameController(Assets) {
 	var game = this;
 
 	game.vars = {};
 	game.methods = {};
+	game.services = {};
 
-	game.vars.stuff = 42;*/
+	game.vars.stuff = 42;
+	game.vars.currentTask = '';
 
-	/*this.vars.barSettings = {
+	game.vars.barSettings = {
         min: 0,
-        max: 100
+        max: 200
     };
 
-	this.vars.progressBars = {
-        bar1: {
+	game.vars.progressBars = {
+        taskDisplay: {
             currentValue: 0,
-            updateValue: 25,
-            updateBar: 'bar2'
-        },
-        bar2: {
-            currentValue: 0,
+            displayValue: 0,
             updateValue: 20,
-            updateBar: 'bar3'
-        },
-        bar3: {
-            currentValue: 0,
-            updateValue: 10
+            updateBar: 'bar2'
         }
     };
 
-	this.methods.click = function (_name) {
-        main.methods.updateProgressBar('bar1');
+    game.methods.init = function () {
+    	console.log(Assets);
+		game.vars.currentTask = Assets.getTask();
     };
 
-    this.methods.updateProgressBar = function (_name) {
-        var currentBar = main.vars.progressBars[_name];
-        if ((currentBar.currentValue + currentBar.updateValue) < main.vars.barSettings.max) {
+
+
+	game.methods.click = function () {
+        game.methods.updateProgressBar('taskDisplay');
+    };
+
+    game.methods.updateProgressBar = function (_name) {
+        var currentBar = game.vars.progressBars[_name];
+        if ((currentBar.currentValue + currentBar.updateValue) < game.vars.barSettings.max) {
             currentBar.currentValue += currentBar.updateValue;
+            currentBar.displayValue = (currentBar.currentValue / game.vars.barSettings.max) * 100;
         } else {
-            var carryOver = (currentBar.currentValue + currentBar.updateValue) - main.vars.barSettings.max;
-            currentBar.currentValue = main.vars.barSettings.min + carryOver;
+            var carryOver = (currentBar.currentValue + currentBar.updateValue) - game.vars.barSettings.max;
+            currentBar.currentValue = game.vars.barSettings.min + carryOver;
+            currentBar.displayValue = (currentBar.currentValue / game.vars.barSettings.max) * 100;
 
-            if (currentBar.updateBar) {
-                main.methods.updateProgressBar(currentBar.updateBar);
-            }
+            game.vars.currentTask = Assets.getTask();
+
+           /* if (currentBar.updateBar) {
+                game.methods.updateProgressBar(currentBar.updateBar);
+            }*/
         }
-    };*/
+    };
 
-});
+    game.methods.init();
+
+}]);
