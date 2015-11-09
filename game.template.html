@@ -1,7 +1,23 @@
-<div>Stuff Goes Here: {{gc.vars.stuff}}</div>
+<div layout="row" layout-padding>
+	Quest: {{gc.vars.currentTask.questType[0]}} {{gc.vars.currentTask.questType[2]}}&nbsp;
+	<span 
+		ng-class="	{uncommon: gc.vars.currentTask.target.rarity === 1,
+					rare: gc.vars.currentTask.target.rarity > 1 && gc.vars.currentTask.target.rarity < 5,
+					legendary: gc.vars.currentTask.target.rarity === 5}">
+		{{gc.vars.currentTask.target.target}}
+	</span>
+</div>
 
-<div layout="row" layout-padding>Progress Bar Display: {{gc.vars.progressBars.taskDisplay.currentValue}}</div>
 <md-progress-linear md-mode="determinate" value="{{gc.vars.progressBars.taskDisplay.displayValue}}" layout="row" layout-padding></md-progress-linear>
-<div layout="row" layout-padding>Task: {{gc.vars.currentTask | json}}</div>
+
+<div layout="row" layout-padding>
+	{{gc.vars.currentTask.questType[1]}} {{gc.vars.currentTask.questType[2]}}&nbsp;
+	<span 
+		ng-class="	{uncommon: gc.vars.currentTask.target.rarity === 1,
+					rare: gc.vars.currentTask.target.rarity > 1 && gc.vars.currentTask.target.rarity < 5,
+					legendary: gc.vars.currentTask.target.rarity === 5}">
+		{{gc.vars.currentTask.target.target}}
+	</span>
+</div>
 
 <md-button class="md-raised md-primary" ng-click="gc.methods.click()">Click Me</md-button>

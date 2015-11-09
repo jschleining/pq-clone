@@ -1,25 +1,10 @@
 angular.module('pq-clone')
 
-.service('Assets', function() {
+.service('Assets', ['QuestItems', function(QuestItems) {
 	var assets_ = this;
   assets_.getTask = getTask_;
 
-	assets_.tasks = [
-		'Find a Thing',
-		'Punch an Object',
-		'Buy Stuff',
-		'Steal a Shiny',
-		'Kill a Monster',
-		'Intimidate a Person'
-	];
-
-  function getTask_() {
-    return assets_.tasks[Math.floor(Math.random() * assets_.tasks.length)];
-  }
-})  
-
-
-  /*assets_.DATA = {
+  assets_.DATA = {
     TASK_TYPES: {
       FIGHT: [
         ['Face', 'Facing'],
@@ -30,171 +15,36 @@ angular.module('pq-clone')
         ['Exterminate', 'Exterminating']
       ],
       FIND: [
-        ['Locate the ', 'Locating the '],
-        ['Find the ', 'Finding the '],
-        ['Seek the ', 'Seeking the ']
-      ]
-    },
-    QUEST_ITEMS: {
-      ITEMS: {
-        MUNDANE: [
-          'Anvil',
-          'Arrow',
-          'Bandage',
-          'Bandolier',
-          'Canoe',
-          'Coin',
-          'Egg',
-          'Hoe',
-          'Hood',
-          'Inkwell',
-          'Needle',
-          'Planter box',
-          'Rock',
-          'Scabbard',
-          'Trinket',
-          'Trowel',
-          'Vest'
-        ],
-        SPECIAL: [
-          'Ankh',
-          'Brazier',
-          'Brooch',
-          'Candelabra',
-          'Casket',
-          'Corset',
-          'Diadem',
-          'Fleece',
-          'Gemstone',
-          'Hymnal',
-          'Lamp',
-          'Laurel',
-          'Lens',
-          'Orb',
-          'Ornament',
-          'Phial',
-          'Sceptre',
-          'Sphere',
-          'Talisman',
-          'Tiara',
-          'Tome',
-          'Towel',
-          'Writ'
-        ],
-      },
-      PREFIXES: [
-        'Arcane',
-        'Astral',
-        'Austere',
-        'Benevolent',
-        'Blessed',
-        'Crafted',
-        'Crystalline',
-        'Deadly',
-        'Enchanted',
-        'Fearsome',
-        'Filigreed',
-        'Gilded',
-        'Gleaming',
-        'Golden',
-        'Grandiose',
-        'Iron',
-        'Legendary',
-        'Lucky',
-        'Magnificent',
-        'Mythic',
-        'One True',
-        'Ostentatious',
-        'Precious',
-        'Proverbial',
-        'Reverential',
-        'Sacred',
-        'Spectral',
-        'Unearthly'
-      ],
-      SUFFIXES: [
-        'Awe',
-        'Chaos',
-        'Comfort',
-        'Cruelty',
-        'Danger',
-        'Despair',
-        'Domination',
-        'Efficiency',
-        'Envy',
-        'Fealty',
-        'Fear',
-        'Foreboding',
-        'Foreshadowing',
-        'Fortune',
-        'Frenzy',
-        'Guile',
-        'Happiness',
-        'Hunger',
-        'Incarceration',
-        'Internment',
-        'Intrusion',
-        'Invisibility',
-        'Joy',
-        'Loyalty',
-        'Nervousness',
-        'Patience',
-        'Pleasure',
-        'Practicality',
-        'Punctuality',
-        'Ra',
-        'Silence',
-        'Solitude',
-        'Submission',
-        'Suffering',
-        'The Bone',
-        'Torpor',
-        'Worry'
+        ['Locate', 'Locating'],
+        ['Find', 'Finding'],
+        ['Seek', 'Seeking']
       ]
     }
   };
 
-
-
-	assets_.getTask = getTask_;
-
-	function getTask_() {
+  function getTask_() {
     var quests = assets_.DATA.TASK_TYPES;
     var quest = quests.FIND[Math.floor(Math.random() * quests.FIND.length)];
-    var questItem = getQuestItem_();
-		return {quest: quest, item: questItem};
-	}
+    var questTarget = QuestItems.getQuestItem();
 
-  function getQuestItem_() {
-    var itemArray = assets_.DATA.QUEST_ITEMS
-    var itemRarity = 0;
-    var items, item;
+    if (questTarget.rarity < 2) {
+      var pattern = /^[aeiouy]/i;
+      if (pattern.test(questTarget.target)) {
 
-    if(getRandomInt_(1, 100) < 26) {
-      items = itemArray.ITEMS.SPECIAL;
-      itemRarity += 1;
+        quest[2] = ' an';
+      } else {
+        quest[2] = ' a';
+      }
+
     } else {
-      items = itemArray.ITEMS.MUNDANE;
+      quest[2] = ' the';
     }
-    item = items[Math.floor(Math.random() * items.length)];
-
-    if(getRandomInt_(1, 100) < 26) {
-      item = itemArray.PREFIXES[Math.floor(Math.random() * itemArray.PREFIXES.length)] + ' ' + item;
-      itemRarity += 1;
-    }
-
-    if(getRandomInt_(1, 100) < 26) {
-      item = item + ' of ' + itemArray.SUFFIXES[Math.floor(Math.random() * itemArray.SUFFIXES.length)];
-      itemRarity += 1;
-    }
-
-    return {item: item, rarity: itemRarity};
-    
+    return {questType: quest, target: questTarget};
   }
 
-  function getRandomInt_(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }*/
+}])  
+
+
 
 
 /*

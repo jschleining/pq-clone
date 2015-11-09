@@ -33,7 +33,6 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
     };
 
     game.methods.init = function () {
-    	console.log(Assets);
 		game.vars.currentTask = Assets.getTask();
     };
 
