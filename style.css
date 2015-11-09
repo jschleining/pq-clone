@@ -1,11 +1,11 @@
-.uncommon {
-	color: green;
-}
+.uncommon { color: green; }
+.rare { color: blue; }
+.legendary { color: violet; }
 
-.rare {
-	color: blue;
-}
-
-.legendary {
-	color: violet;
-}
+.extremelyweak { color: DarkGray;}
+.veryweak { color: DeepSkyBlue; }
+.weak { color: DarkOliveGreen;}
+.tough { color: gold; }
+.strong { color: DarkOrange; }
+.mighty { color: crimson; }
+.terrifying { color: DarkMagenta; }

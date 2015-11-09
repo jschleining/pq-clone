@@ -125,8 +125,8 @@ angular.module('pq-clone')
   MONSTER_TEMPLATES: [ // TODO: Add Exclusions so only certain types can have certain templates, also, expand. 
                         // I want a mighty half-elf half-giant undead were-rat wizard
                         {name: 'war', modifier: 1},
-                        {name: 'Battle-', modifier: 1},
-                        {name: 'Were-', modifier: 1},
+                        {name: 'battle-', modifier: 1},
+                        {name: 'were-', modifier: 1},
                         {name: 'giant', modifier: 1},
                         {name: 'undead', modifier: 1},
                      ],

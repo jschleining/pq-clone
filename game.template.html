@@ -1,23 +1,43 @@
 <div layout="row" layout-padding>
 	Quest: {{gc.vars.currentTask.questType[0]}} {{gc.vars.currentTask.questType[2]}}&nbsp;
-	<span 
-		ng-class="	{uncommon: gc.vars.currentTask.target.rarity === 1,
-					rare: gc.vars.currentTask.target.rarity > 1 && gc.vars.currentTask.target.rarity < 5,
-					legendary: gc.vars.currentTask.target.rarity === 5}">
-		{{gc.vars.currentTask.target.target}}
-	</span>
+	<span ng-if="gc.vars.currentTask.baseType === 'FIND'"
+				ng-class="	{uncommon: gc.vars.currentTask.target.rarity === 1,
+							rare: gc.vars.currentTask.target.rarity > 1 && gc.vars.currentTask.target.rarity < 5,
+							legendary: gc.vars.currentTask.target.rarity === 5}">
+							{{gc.vars.currentTask.target.target}}
+		</span>
+		<span ng-if="gc.vars.currentTask.baseType === 'FIGHT'"
+				ng-class="	{extremelyweak: gc.vars.currentTask.target.rarity === -3,
+							veryweak: gc.vars.currentTask.target.rarity === -2,
+							weak: gc.vars.currentTask.target.rarity === -1,
+							tough: gc.vars.currentTask.target.rarity === 1,
+							strong: gc.vars.currentTask.target.rarity === 2,
+							mighty: gc.vars.currentTask.target.rarity === 3,
+							terrifying: gc.vars.currentTask.target.rarity === 4}">
+							{{gc.vars.currentTask.target.target.creature}}
+		</span>
 </div>
 
 <md-progress-linear md-mode="determinate" value="{{gc.vars.progressBars.taskDisplay.displayValue}}" layout="row" layout-padding></md-progress-linear>
 
 <div layout="row" layout-padding>
 	{{gc.vars.currentTask.questType[1]}} {{gc.vars.currentTask.questType[2]}}&nbsp;
-	<span 
-		ng-class="	{uncommon: gc.vars.currentTask.target.rarity === 1,
-					rare: gc.vars.currentTask.target.rarity > 1 && gc.vars.currentTask.target.rarity < 5,
-					legendary: gc.vars.currentTask.target.rarity === 5}">
-		{{gc.vars.currentTask.target.target}}
-	</span>
+		<span ng-if="gc.vars.currentTask.baseType === 'FIND'"
+				ng-class="	{uncommon: gc.vars.currentTask.target.rarity === 1,
+							rare: gc.vars.currentTask.target.rarity > 1 && gc.vars.currentTask.target.rarity < 5,
+							legendary: gc.vars.currentTask.target.rarity === 5}">
+							{{gc.vars.currentTask.target.target}}
+		</span>
+		<span ng-if="gc.vars.currentTask.baseType === 'FIGHT'"
+				ng-class="	{extremelyweak: gc.vars.currentTask.target.rarity === -3,
+							veryweak: gc.vars.currentTask.target.rarity === -2,
+							weak: gc.vars.currentTask.target.rarity === -1,
+							tough: gc.vars.currentTask.target.rarity === 1,
+							strong: gc.vars.currentTask.target.rarity === 2,
+							mighty: gc.vars.currentTask.target.rarity === 3,
+							terrifying: gc.vars.currentTask.target.rarity === 4}">
+							{{gc.vars.currentTask.target.target.creature}}
+		</span>
 </div>
 
 <md-button class="md-raised md-primary" ng-click="gc.methods.click()">Click Me</md-button>

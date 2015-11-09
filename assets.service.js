@@ -1,10 +1,11 @@
 angular.module('pq-clone')
 
-.service('Assets', ['QuestItems', function(QuestItems) {
-	var assets_ = this;
-  assets_.getTask = getTask_;
+.service('Assets', ['QuestItems', 'QuestMonsters', function(QuestItems, QuestMonsters) {
+	var service_ = this;
+  service_.getTask = getTask_;
+  service_.getRandomInt = getRandomInt_;
 
-  assets_.DATA = {
+  service_.DATA = {
     TASK_TYPES: {
       FIGHT: [
         ['Face', 'Facing'],
@@ -23,23 +24,44 @@ angular.module('pq-clone')
   };
 
   function getTask_() {
-    var quests = assets_.DATA.TASK_TYPES;
-    var quest = quests.FIND[Math.floor(Math.random() * quests.FIND.length)];
+    var quests = service_.DATA.TASK_TYPES;
+    var quest;
     var questTarget = QuestItems.getQuestItem();
+    var baseType = '';
 
-    if (questTarget.rarity < 2) {
-      var pattern = /^[aeiouy]/i;
-      if (pattern.test(questTarget.target)) {
+    if(service_.getRandomInt(1, 100) < 51) {
+      quest = quests.FIND[Math.floor(Math.random() * quests.FIND.length)];
+      baseType = 'FIND';
+      questTarget = QuestItems.getQuestItem();
 
-        quest[2] = ' an';
+      if (questTarget.rarity < 2) {
+        var pattern = /^[aeiouy]/i;
+        if (pattern.test(questTarget.target)) {
+          quest[2] = ' an';
+        } else {
+          quest[2] = ' a';
+        }
       } else {
-        quest[2] = ' a';
+        quest[2] = ' the';
       }
-
     } else {
-      quest[2] = ' the';
+      quest = quests.FIGHT[Math.floor(Math.random() * quests.FIGHT.length)];
+      baseType = 'FIGHT';
+      questTarget = QuestMonsters.getQuestMonster();
+
+      var pattern = /^[aeiouy]/i;
+        if (pattern.test(questTarget.target)) {
+          quest[2] = ' an';
+        } else {
+          quest[2] = ' a';
+        }
     }
-    return {questType: quest, target: questTarget};
+
+    return {baseType: baseType, questType: quest, target: questTarget};
+  }
+
+  function getRandomInt_(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
 }])  
