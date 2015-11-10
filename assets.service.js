@@ -34,33 +34,41 @@ angular.module('pq-clone')
       baseType = 'FIND';
       questTarget = QuestItems.getQuestItem();
 
+      // pluralize after getting definite or indefinite
+
       if (questTarget.rarity < 2) {
-        var pattern = /^[aeiouy]/i;
+        /*var pattern = /^[aeiouy]/i;
         if (pattern.test(questTarget.target)) {
           quest[2] = ' an';
         } else {
           quest[2] = ' a';
-        }
+        }*/
+
+        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
       } else {
-        quest[2] = ' the';
+        //quest[2] = ' the';
+        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
       }
     } else {
       quest = quests.FIGHT[Math.floor(Math.random() * quests.FIGHT.length)];
       baseType = 'FIGHT';
       questTarget = QuestMonsters.getQuestMonster();
+      quest[2] = Utilities.indefiniteArticle(questTarget.target.creature, 1);
 
-      console.log('Indefinite Singular: ', Utilities.indefiniteArticle(questTarget.target.creature, 1));
-      console.log('Indefinite Plural: 3', Utilities.indefiniteArticle(questTarget.target.creature, 3));
-      console.log('Definite Singular: ', Utilities.definiteArticle(questTarget.target.creature, 1));
-      console.log('Definite Plural: ', Utilities.definiteArticle(questTarget.target.creature, 3));
+      console.log('Indefinite Singular: ', Utilities.indefiniteArticle(questTarget.target.creature, 1), questTarget.target.creature);
+      console.log('Indefinite Plural: 3', Utilities.indefiniteArticle(questTarget.target.creature, 3), questTarget.target.creature);
+      console.log('Definite Singular: ', Utilities.definiteArticle(questTarget.target.creature), questTarget.target.creature);
+      console.log('Definite Plural: ', Utilities.definiteArticle(questTarget.target.creature), questTarget.target.creature);
+
+      // pluralize after getting definite or indefinite
       
 
-      var pattern = /^[aeiouy]/i;
+      /*var pattern = /^[aeiouy]/i;
         if (pattern.test(questTarget.target)) {
           quest[2] = ' an';
         } else {
           quest[2] = ' a';
-        }
+        }*/
     }
 
     return {baseType: baseType, questType: quest, target: questTarget};

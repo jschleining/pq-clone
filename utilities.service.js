@@ -76,28 +76,25 @@ angular.module('pq-clone')
   }
 
   /*
-  * Returns the word and associated indefinite article.
+  * Returns the associated indefinite article.
   */
   function indefiniteArticle_(_string, _quantity) {
     if (_quantity === 1) {
       if (findSubString(_string.charAt(0), 'AEIOUÜaeiouü') > 0) {
-        return 'an ' + _string;
+        return 'an ';
       } else {
-        return 'a ' + _string;
+        return 'a ';
       }
     } else {
-      return pluralize(_string);
+      return '';
     }
   }
 
   /*
-  * Returns the word and associated definite article.
+  * Returns the associated definite article.
   */
-  function definiteArticle_(_string, _quantity) {
-    if (_quantity > 1) {
-      _string = pluralize(_string);
-    }
-    return 'the ' + _string;
+  function definiteArticle_(_string) {
+    return 'the ';
   }
 
 
