@@ -1,6 +1,6 @@
 angular.module('pq-clone')
 
-.service('Assets', ['QuestItems', 'QuestMonsters', function(QuestItems, QuestMonsters) {
+.service('Assets', ['QuestItems', 'QuestMonsters', 'Utilities', function(QuestItems, QuestMonsters, Utilities) {
 	var service_ = this;
   service_.getTask = getTask_;
   service_.getRandomInt = getRandomInt_;
@@ -48,6 +48,12 @@ angular.module('pq-clone')
       quest = quests.FIGHT[Math.floor(Math.random() * quests.FIGHT.length)];
       baseType = 'FIGHT';
       questTarget = QuestMonsters.getQuestMonster();
+
+      console.log('Indefinite Singular: ', Utilities.indefiniteArticle(questTarget.target.creature, 1));
+      console.log('Indefinite Plural: 3', Utilities.indefiniteArticle(questTarget.target.creature, 3));
+      console.log('Definite Singular: ', Utilities.definiteArticle(questTarget.target.creature, 1));
+      console.log('Definite Plural: ', Utilities.definiteArticle(questTarget.target.creature, 3));
+      
 
       var pattern = /^[aeiouy]/i;
         if (pattern.test(questTarget.target)) {

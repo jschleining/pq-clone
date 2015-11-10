@@ -3,9 +3,13 @@ angular.module('pq-clone')
 .service('Utilities', function() {
 	var service_ = this;
 
+  service_.indefiniteArticle = indefiniteArticle_;
+  service_.definiteArticle = definiteArticle_;
+
   /*
   * String Manipulation Functions
   *   Modified from original Progress Quest Functions for clarity
+  *   May be able to move all of these to a filter
   */
 
   // Not sure I am going to use this function. I dont like storing array data in strings.
@@ -74,7 +78,7 @@ angular.module('pq-clone')
   /*
   * Returns the word and associated indefinite article.
   */
-  function indefiniteArticle(_string, _quantity) {
+  function indefiniteArticle_(_string, _quantity) {
     if (_quantity === 1) {
       if (findSubString(_string.charAt(0), 'AEIOUÜaeiouü') > 0) {
         return 'an ' + _string;
@@ -89,7 +93,7 @@ angular.module('pq-clone')
   /*
   * Returns the word and associated definite article.
   */
-  function definiteArticle(_string, _quantity) {
+  function definiteArticle_(_string, _quantity) {
     if (_quantity > 1) {
       _string = pluralize(_string);
     }
