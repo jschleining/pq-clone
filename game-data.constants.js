@@ -131,19 +131,19 @@ angular.module('pq-clone')
                         {name: 'undead', modifier: 1},
                      ],
   MONSTER_MANUAL: [ // TODO: Make this more sophisticated - use proper CRs, treasure, rarity, grouping, type, subtype, etc
-    {creature: 'Ant', cr: 0, reward: 'antenna'},
-    {creature: 'Beagle', cr: 0, reward: 'collar'},
-    {creature: 'Bunny', cr: 0, reward: 'ear'},
-    {creature: 'Centipede', cr: 0, reward: 'leg'},
-    {creature: 'Crayfish', cr: 0, reward: 'antenna'},
-    {creature: 'Fly', cr: 0, reward: ''},
-    {creature: 'Frog', cr: 0, reward: 'leg'},
-    {creature: 'Midge', cr: 0, reward: 'corpse'},
-    {creature: 'Moth', cr: 0, reward: 'dust'},
-    {creature: 'Rat', cr: 0, reward: 'tail'},
-    {creature: 'Spider', cr: 0, reward: 'web'},
-    {creature: 'Wasp', cr: 0, reward: 'stinger'}
-  ]
+                    {creature: 'Ant', cr: 0, reward: 'antenna'},
+                    {creature: 'Beagle', cr: 0, reward: 'collar'},
+                    {creature: 'Bunny', cr: 0, reward: 'ear'},
+                    {creature: 'Centipede', cr: 0, reward: 'leg'},
+                    {creature: 'Crayfish', cr: 0, reward: 'antenna'},
+                    {creature: 'Fly', cr: 0, reward: ''},
+                    {creature: 'Frog', cr: 0, reward: 'leg'},
+                    {creature: 'Midge', cr: 0, reward: 'corpse'},
+                    {creature: 'Moth', cr: 0, reward: 'dust'},
+                    {creature: 'Rat', cr: 0, reward: 'tail'},
+                    {creature: 'Spider', cr: 0, reward: 'web'},
+                    {creature: 'Wasp', cr: 0, reward: 'stinger'}
+                  ]
 })
 
 
@@ -393,29 +393,6 @@ K.Monsters = [
   ];
 
 
-
-
-
-
-
-
-K.MonMods = [
-  '-4 fœtal *',
-  '-4 dying *',
-  '-3 crippled *',
-  '-3 baby *',
-  '-2 adolescent',
-  '-2 very sick *',
-  '-1 lesser *',
-  '-1 undernourished *',
-  '+1 greater *',
-  '+1 * Elder',
-  '+2 war *',
-  '+2 Battle-*',
-  '+3 Were-*',
-  '+3 undead *',
-  '+4 giant *',
-  '+4 * Rex'];
 
 
 
