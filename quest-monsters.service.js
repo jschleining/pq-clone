@@ -9,10 +9,12 @@ angular.module('pq-clone')
 
   // TODO: Optimize this. I think it can be done better.
   function getQuestMonster_() {
-    var monster = ''
-    var prefix = ''
+    var m = '';
+    var monster = '';
+    var prefix = '';
     var template = '';
     var rarity = 0;
+
 
     if(service_.getRandomInt(1, 100) < 51) {
       var p = service_.getModifier('MONSTER_PREFIXES');
@@ -26,7 +28,9 @@ angular.module('pq-clone')
       rarity += t.modifier;
     }
 
-    monster = service_.getMonster('MONSTER_MANUAL');
+    // Protect the initial object by creating a copy.
+    m = service_.getMonster('MONSTER_MANUAL');
+    monster = {creature: m.creature, cr: m.cr, reward: m.reward};
     monster.creature = prefix + template + monster.creature;
 
     return {target: monster, rarity: rarity}

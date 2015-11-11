@@ -25,9 +25,10 @@ angular.module('pq-clone')
 
   function getTask_() {
     var quests = service_.DATA.TASK_TYPES;
-    var quest;
-    var questTarget = QuestItems.getQuestItem();
+    var quest = null;
+    var questTarget = null;
     var baseType = '';
+    var qty = service_.getRandomInt(1, 3);
 
     if(service_.getRandomInt(1, 100) < 51) {
       quest = quests.FIND[Math.floor(Math.random() * quests.FIND.length)];
@@ -37,38 +38,21 @@ angular.module('pq-clone')
       // pluralize after getting definite or indefinite
 
       if (questTarget.rarity < 2) {
-        /*var pattern = /^[aeiouy]/i;
-        if (pattern.test(questTarget.target)) {
-          quest[2] = ' an';
-        } else {
-          quest[2] = ' a';
-        }*/
-
         quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
       } else {
-        //quest[2] = ' the';
         quest[2] = Utilities.definiteArticle(questTarget.target, 1);
       }
     } else {
       quest = quests.FIGHT[Math.floor(Math.random() * quests.FIGHT.length)];
       baseType = 'FIGHT';
+      
       questTarget = QuestMonsters.getQuestMonster();
-      quest[2] = Utilities.indefiniteArticle(questTarget.target.creature, 1);
-
-      console.log('Indefinite Singular: ', Utilities.indefiniteArticle(questTarget.target.creature, 1), questTarget.target.creature);
-      console.log('Indefinite Plural: 3', Utilities.indefiniteArticle(questTarget.target.creature, 3), questTarget.target.creature);
-      console.log('Definite Singular: ', Utilities.definiteArticle(questTarget.target.creature), questTarget.target.creature);
-      console.log('Definite Plural: ', Utilities.definiteArticle(questTarget.target.creature), questTarget.target.creature);
+      quest[2] = Utilities.indefiniteArticle(questTarget.target.creature, qty);
 
       // pluralize after getting definite or indefinite
-      
-
-      /*var pattern = /^[aeiouy]/i;
-        if (pattern.test(questTarget.target)) {
-          quest[2] = ' an';
-        } else {
-          quest[2] = ' a';
-        }*/
+      if (qty > 1) {
+        questTarget.target.creature = qty + ' ' + Utilities.pluralize(questTarget.target.creature);
+      }
     }
 
     return {baseType: baseType, questType: quest, target: questTarget};

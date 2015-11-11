@@ -5,6 +5,7 @@ angular.module('pq-clone')
 
   service_.indefiniteArticle = indefiniteArticle_;
   service_.definiteArticle = definiteArticle_;
+  service_.pluralize = pluralize_;
 
   /*
   * String Manipulation Functions
@@ -59,7 +60,8 @@ angular.module('pq-clone')
   /*
   * Returns the plural form of a word.
   */
-  function pluralize(_string) {
+  function pluralize_(_string) {
+    console.log('Pluralize: ', _string);
     if (endsWith(_string, 'y')) {
       return getSubString(_string, 1, getLength(_string) - 1) + 'ies';
     } else if (endsWith(_string, 'us')) {
@@ -81,9 +83,9 @@ angular.module('pq-clone')
   function indefiniteArticle_(_string, _quantity) {
     if (_quantity === 1) {
       if (findSubString(_string.charAt(0), 'AEIOUÜaeiouü') > 0) {
-        return 'an ';
+        return 'an';
       } else {
-        return 'a ';
+        return 'a';
       }
     } else {
       return '';
@@ -94,7 +96,7 @@ angular.module('pq-clone')
   * Returns the associated definite article.
   */
   function definiteArticle_(_string) {
-    return 'the ';
+    return 'the';
   }
 
 
