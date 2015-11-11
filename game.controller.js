@@ -17,8 +17,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 
 	game.vars.stuff = 42;
 	game.vars.currentTask = '';
-    game.vars.currentName1 = '';
-    game.vars.currentName2 = '';
+    game.vars.currentName = '';
 
 	game.vars.barSettings = {
         min: 0,
@@ -36,12 +35,9 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 
     game.methods.init = function () {
 		game.vars.currentTask = Assets.getTask();
-        game.vars.currentName1 = Names.GenerateName();
-        game.vars.currentName2 = Names.getName();
+        game.vars.currentName = Names.getName();
     };
-
-
-
+    
 	game.methods.click = function () {
         game.methods.updateProgressBar('taskDisplay');
     };

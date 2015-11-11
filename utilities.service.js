@@ -3,9 +3,18 @@ angular.module('pq-clone')
 .service('Utilities', function() {
 	var service_ = this;
 
+  service_.getRandomInt = getRandomInt_;
   service_.indefiniteArticle = indefiniteArticle_;
   service_.definiteArticle = definiteArticle_;
   service_.pluralize = pluralize_;
+  service_.capitalize = capitalize_;
+
+  /*
+  * Get a Random Number from a set.
+  */
+  function getRandomInt_(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 
   /*
   * String Manipulation Functions
@@ -98,6 +107,13 @@ angular.module('pq-clone')
   function definiteArticle_(_string) {
     return 'the';
   }
+
+  /*
+  * Capitalize the first letter of the string.
+  */
+  function capitalize_(_string) {
+    return _string.substr(0,1).toUpperCase() + _string.substr(1).toLowerCase();
+}
 
 
 })

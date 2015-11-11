@@ -1,6 +1,11 @@
 angular.module('pq-clone')
 
 .constant('GameConstants', {
+  NAME_PARTS: [
+                ['br', 'cr', 'dr', 'fr', 'gr', 'j', 'kr', 'l', 'm', 'n', 'pr', 'r', 'sh', 'tr', 'v', 'wh', 'x', 'y', 'z'],
+                ['a', 'a', 'e', 'e', 'i', 'i', 'o', 'o', 'u', 'u', 'ae', 'ei', 'oo', 'ou'],
+                ['b', 'ck', 'd', 'g', 'k', 'm', 'n', 'p', 't', 'v', 'x', 'z']
+              ],
   QUEST_ITEM_PREFIXES:  [
                           'Arcane',
                           'Astral',
