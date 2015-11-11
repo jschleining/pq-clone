@@ -832,20 +832,6 @@ function BoringItem() {
 }
 
 
-
-
-var KParts = [
-  'br|cr|dr|fr|gr|j|kr|l|m|n|pr||||r|sh|tr|v|wh|x|y|z'.split('|'),
-  'a|a|e|e|i|i|o|o|u|u|ae|ie|oo|ou'.split('|'),
-  'b|ck|d|g|k|m|n|p|t|v|x|z'.split('|')];
-
-function GenerateName() {
-  var result = '';
-  for (var i = 0; i <= 5; ++i)
-    result += Pick(KParts[i % 3]);
-  return result.charAt(0).toUpperCase() + result.slice(1);
-}
-
 function Pick(a) {
   return a[Random(a.length)];
 }
