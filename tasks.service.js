@@ -23,7 +23,7 @@ angular.module('pq-clone')
     } else if (rand >= 81) {
       baseType = 'DIPLOMACY';
     }
-    console.log(baseType);
+    
     quest = quests[baseType][Math.floor(Math.random() * quests[baseType].length)];
 
     if (baseType == 'FIGHT') {
@@ -63,9 +63,9 @@ angular.module('pq-clone')
       }
     } else if (baseType == 'DIPLOMACY') {
       questTarget = QuestMonsters.getQuestMonster();
+
       quest[2] = Utilities.definiteArticle(questTarget.target.creature, 1);
     }
-    console.log(questTarget);
 
     return {baseType: baseType, questType: quest, target: questTarget};
   }
