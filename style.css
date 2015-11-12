@@ -1,11 +1,8 @@
-.uncommon { color: green; }
-.rare { color: blue; }
-.legendary { color: DarkMagenta; }
-
-.extremelyweak { color: DarkGray;}
-.veryweak { color: DeepSkyBlue; }
-.weak { color: DarkOliveGreen;}
-.tough { color: gold; }
-.strong { color: DarkOrange; }
-.mighty { color: crimson; }
-.terrifying { color: DarkMagenta; }
+.challenge_0 { color: Lavender; }
+.challenge_1 { color: DarkGray; }
+.challenge_2 { color: DodgerBlue; }
+.challenge_3 { color: LawnGreen; }
+.challenge_4 { color: gold; }
+.challenge_5 { color: DarkOrange; }
+.challenge_6 { color: crimson; }
+.challenge_7 { color: DarkMagenta; }

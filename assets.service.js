@@ -1,30 +1,12 @@
 angular.module('pq-clone')
 
-.service('Assets', ['QuestItems', 'QuestMonsters', 'Utilities', function(QuestItems, QuestMonsters, Utilities) {
+.service('Assets', ['QuestItems', 'QuestMonsters', 'Utilities', 'GameConstants', function(QuestItems, QuestMonsters, Utilities, GameConstants) {
 	var service_ = this;
   service_.getTask = getTask_;
   service_.getRandomInt = getRandomInt_;
 
-  service_.DATA = {
-    TASK_TYPES: {
-      FIGHT: [
-        ['Face', 'Facing'],
-        ['Fight', 'Fighting'],
-        ['Slay', 'Slaying'],
-        ['Defeat', 'Defeating'],
-        ['Execute', 'Executing'],
-        ['Exterminate', 'Exterminating']
-      ],
-      FIND: [
-        ['Locate', 'Locating'],
-        ['Find', 'Finding'],
-        ['Seek', 'Seeking']
-      ]
-    }
-  };
-
   function getTask_() {
-    var quests = service_.DATA.TASK_TYPES;
+    var quests = GameConstants.TASK_TYPES;
     var quest = null;
     var questTarget = null;
     var baseType = '';

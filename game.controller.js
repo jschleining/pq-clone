@@ -8,7 +8,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 	});
 })
 
-.controller('GameController', ['Assets', 'Names', function GameController(Assets, Names) {
+.controller('GameController', ['Assets', 'Names', 'Tasks', function GameController(Assets, Names, Tasks) {
 	var game = this;
 
 	game.vars = {};
@@ -34,7 +34,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
     };
 
     game.methods.init = function () {
-		game.vars.currentTask = Assets.getTask();
+		game.vars.currentTask = Tasks.getTask();
         game.vars.currentName = Names.getName();
     };
     

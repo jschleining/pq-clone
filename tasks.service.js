@@ -1,71 +1,113 @@
 angular.module('pq-clone')
 
-.service('Assets', ['QuestItems', 'QuestMonsters', function(QuestItems, QuestMonsters) {
+.service('Tasks', ['QuestItems', 'QuestMonsters', 'GameConstants', 'Utilities', function(QuestItems, QuestMonsters, GameConstants, Utilities) {
 	var service_ = this;
   service_.getTask = getTask_;
-  service_.getRandomInt = getRandomInt_;
-
-  service_.DATA = {
-    TASK_TYPES: {
-      FIGHT: [
-        ['Slay', 'Slaying'],
-        ['Execute', 'Executing'],
-        ['Exterminate', 'Exterminating']
-      ],
-      FIND: [
-        ['Locate', 'Locating'],
-        ['Find', 'Finding'],
-        ['Seek', 'Seeking']
-      ],
-      RETRIEVE: [
-        ['fetch me', 'fetching'],
-        ['bring me', 'bringing']
-      ],
-      GIVE: [
-        ['deliver this', 'delivering']
-      ],
-      DIPLOMACY: [
-        ['placate', 'placating']
-      ]
-    }
-  };
 
   function getTask_() {
-    var quests = service_.DATA.TASK_TYPES;
+    var quests = GameConstants.TASK_TYPES;
     var quest;
-    var questTarget = QuestItems.getQuestItem();
+    var questTarget;
     var baseType = '';
+    // TODO (JSchleining): Implement Task Rarity.
+    var rand = Utilities.getRandomInt(1, 100);
 
-    if(service_.getRandomInt(1, 100) < 51) {
-      quest = quests.FIND[Math.floor(Math.random() * quests.FIND.length)];
-      baseType = 'FIND';
-      questTarget = QuestItems.getQuestItem();
-
-      if (questTarget.rarity < 2) {
-        var pattern = /^[aeiouy]/i;
-        if (pattern.test(questTarget.target)) {
-          quest[2] = ' an';
-        } else {
-          quest[2] = ' a';
-        }
-      } else {
-        quest[2] = ' the';
-      }
-    } else {
-      quest = quests.FIGHT[Math.floor(Math.random() * quests.FIGHT.length)];
+    if (rand >= 1 && rand < 21) {
       baseType = 'FIGHT';
-      questTarget = QuestMonsters.getQuestMonster();
-
-      var pattern = /^[aeiouy]/i;
-        if (pattern.test(questTarget.target)) {
-          quest[2] = ' an';
-        } else {
-          quest[2] = ' a';
-        }
+    } else if (rand >= 21 && rand < 41) {
+      baseType = 'FIND';
+    } else if (rand >= 41 && rand < 61) {
+      baseType = 'RETRIEVE';
+    } else if (rand >= 61 && rand < 81) {
+      baseType = 'GIVE';
+    } else if (rand >= 81) {
+      baseType = 'DIPLOMACY';
     }
+    console.log(baseType);
+    quest = quests[baseType][Math.floor(Math.random() * quests[baseType].length)];
+
+    if (baseType == 'FIGHT') {
+      questTarget = QuestMonsters.getQuestMonster();
+      //  Random number between 1 and 3 monsters
+      var qty = Utilities.getRandomInt(1, 3);
+
+      quest[2] = Utilities.indefiniteArticle(questTarget.target.creature, qty);
+
+      // pluralize after getting definite or indefinite
+      if (qty > 1) {
+        questTarget.target.creature = qty + ' ' + Utilities.pluralize(questTarget.target.creature);
+      }
+    } else if (baseType == 'FIND') {
+      questTarget = QuestItems.getQuestItem();
+      // pluralize after getting definite or indefinite
+      if (questTarget.rarity < 2) {
+        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      } else {
+        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+      }
+    } else if (baseType == 'RETRIEVE') {
+      questTarget = QuestItems.getQuestItem();
+      // pluralize after getting definite or indefinite
+      if (questTarget.rarity < 2) {
+        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      } else {
+        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+      }
+    } else if (baseType == 'GIVE') {
+      questTarget = QuestItems.getQuestItem();
+      // pluralize after getting definite or indefinite
+      if (questTarget.rarity < 2) {
+        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      } else {
+        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+      }
+    } else if (baseType == 'DIPLOMACY') {
+      questTarget = QuestMonsters.getQuestMonster();
+      quest[2] = Utilities.definiteArticle(questTarget.target.creature, 1);
+    }
+    console.log(questTarget);
 
     return {baseType: baseType, questType: quest, target: questTarget};
   }
+
+  /*
+  
+    function getTask_() {
+      var quests = GameConstants.TASK_TYPES;
+      var quest = null;
+      var questTarget = null;
+      var baseType = '';
+      var qty = service_.getRandomInt(1, 3);
+
+      if(service_.getRandomInt(1, 100) < 51) {
+        quest = quests.FIND[Math.floor(Math.random() * quests.FIND.length)];
+        baseType = 'FIND';
+        questTarget = QuestItems.getQuestItem();
+
+        // pluralize after getting definite or indefinite
+
+        if (questTarget.rarity < 2) {
+          quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+        } else {
+          quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+        }
+      } else {
+        quest = quests.FIGHT[Math.floor(Math.random() * quests.FIGHT.length)];
+        baseType = 'FIGHT';
+
+        questTarget = QuestMonsters.getQuestMonster();
+        quest[2] = Utilities.indefiniteArticle(questTarget.target.creature, qty);
+
+        // pluralize after getting definite or indefinite
+        if (qty > 1) {
+          questTarget.target.creature = qty + ' ' + Utilities.pluralize(questTarget.target.creature);
+        }
+      }
+
+      return {baseType: baseType, questType: quest, target: questTarget};
+    }
+
+  */
 
   function getRandomInt_(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
