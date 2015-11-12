@@ -8,10 +8,7 @@ angular.module('pq-clone')
   service_.DATA = {
     TASK_TYPES: {
       FIGHT: [
-        ['Face', 'Facing'],
-        ['Fight', 'Fighting'],
         ['Slay', 'Slaying'],
-        ['Defeat', 'Defeating'],
         ['Execute', 'Executing'],
         ['Exterminate', 'Exterminating']
       ],
@@ -19,6 +16,16 @@ angular.module('pq-clone')
         ['Locate', 'Locating'],
         ['Find', 'Finding'],
         ['Seek', 'Seeking']
+      ],
+      RETRIEVE: [
+        ['fetch me', 'fetching'],
+        ['bring me', 'bringing']
+      ],
+      GIVE: [
+        ['deliver this', 'delivering']
+      ],
+      DIPLOMACY: [
+        ['placate', 'placating']
       ]
     }
   };
