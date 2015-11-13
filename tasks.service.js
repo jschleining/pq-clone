@@ -26,7 +26,6 @@ angular.module('pq-clone')
       }
     } else if (baseType == 'FIND') {
       questTarget = QuestItems.getQuestItem();
-      // pluralize after getting definite or indefinite
       if (questTarget.rarity < 2) {
         quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
       } else {
@@ -34,7 +33,6 @@ angular.module('pq-clone')
       }
     } else if (baseType == 'RETRIEVE') {
       questTarget = QuestItems.getQuestItem();
-      // pluralize after getting definite or indefinite
       if (questTarget.rarity < 2) {
         quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
       } else {
