@@ -1,6 +1,6 @@
 angular.module('pq-clone')
 
-.service('Tasks', ['QuestItems', 'QuestMonsters', 'GameConstants', 'Utilities', function(QuestItems, QuestMonsters, GameConstants, Utilities) {
+.service('Tasks', ['QuestMonsters', 'GameConstants', 'Utilities', 'Items',  function(QuestMonsters, GameConstants, Utilities, Items) {
 	var service_ = this;
   service_.getTask = getTask_;
 
@@ -25,21 +25,40 @@ angular.module('pq-clone')
         questTarget.target.creature = qty + ' ' + Utilities.pluralize(questTarget.target.creature);
       }
     } else if (baseType == 'FIND') {
-      questTarget = QuestItems.getQuestItem();
+      var rnd = Utilities.getRandomInt(1, 100);
+
+      if (rnd < 10) {
+        questTarget = Items.getSpecialItem();
+       } else if (rnd >= 10 && rnd < 25) {
+        questTarget = Items.getPrefixedItem();
+      } else if (rnd >= 25 && rnd < 41) {
+        questTarget = Items.getSuffixedItem();
+      } else if (rnd >= 41 && rnd < 66) {
+        questTarget = Items.getBasicItem('QUEST_ITEMS_SPECIAL');
+      } else {
+        questTarget = Items.getBasicItem('QUEST_ITEMS_MUNDANE');
+      }
+
       if (questTarget.rarity < 2) {
         quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
       } else {
         quest[2] = Utilities.definiteArticle(questTarget.target, 1);
       }
     } else if (baseType == 'RETRIEVE') {
-      questTarget = QuestItems.getQuestItem();
+      questTarget = Items.getPrefixedItem();
       if (questTarget.rarity < 2) {
         quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
       } else {
         quest[2] = Utilities.definiteArticle(questTarget.target, 1);
       }
     } else if (baseType == 'GIVE') {
-      questTarget = QuestItems.getQuestItem();
+      questTarget = Items.getBasicItem('QUEST_ITEMS_MUNDANE');
+
+      if (questTarget.rarity < 2) {
+        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      } else {
+        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+      }
     } else if (baseType == 'DIPLOMACY') {
       // TODO (JSchleining):Temporary. Do this better.
       questTarget = QuestMonsters.getBasicMonster();
@@ -139,133 +158,6 @@ function CompleteQuest() {
 
   SaveGame();
 }
-
-
-
-
-
-
-
-
-function SpecialItem() {
-  return InterestingItem() + ' of ' + Pick(K.ItemOfs);
-}
-
-function InterestingItem() {
-  return Pick(K.ItemAttrib) + ' ' + Pick(K.Specials);
-}
-
-function BoringItem() {
-  return Pick(K.BoringItems);
-}
-
-
-
-
-
-
-function NamedMonster(level) {
-  var lev = 0;
-  var result = '';
-  for (var i = 0; i < 5; ++i) {
-    var m = Pick(K.Monsters);
-    if (!result || (Abs(level-StrToInt(Split(m,1))) < Abs(level-lev))) {
-      result = Split(m,0);
-      lev = StrToInt(Split(m,1));
-    }
-  }
-  return GenerateName() + ' the ' + result;
-}
-
-function ImpressiveGuy() {
-  return Pick(K.ImpressiveTitles) +
-    (Random(2) ? ' of the ' + Pick(K.Races) : ' of ' + GenerateName());
-}
-
-function MonsterTask(level) {
-  var definite = false;
-  for (var i = level; i >= 1; --i) {
-    if (Odds(2,5))
-      level += RandSign();
-  }
-  if (level < 1) level = 1;
-  // level = level of puissance of opponent(s) we'll return
-
-  var monster, lev;
-  if (Odds(1,25)) {
-    // Use an NPC every once in a while
-      monster = ' ' + Split(Pick(K.Races), 0);
-    if (Odds(1,2)) {
-      monster = 'passing' + monster + ' ' + Split(Pick(K.Klasses), 0);
-    } else {
-      monster = PickLow(K.Titles) + ' ' + GenerateName() + ' the' + monster;
-      definite = true;
-    }
-    lev = level;
-    monster = monster + '|' + IntToStr(level) + '|*';
-  } else if (game.questmonster && Odds(1,4)) {
-    // Use the quest monster
-    monster = K.Monsters[game.questmonsterindex];
-    lev = StrToInt(Split(monster,1));
-  } else {
-    // Pick the monster out of so many random ones closest to the level we want
-    monster = Pick(K.Monsters);
-    lev = StrToInt(Split(monster,1));
-    for (var ii = 0; ii < 5; ++ii) {
-      var m1 = Pick(K.Monsters);
-      if (Abs(level-StrToInt(Split(m1,1))) < Abs(level-lev)) {
-        monster = m1;
-        lev = StrToInt(Split(monster,1));
-      }
-    }
-  }
-
-  var result = Split(monster,0);
-  game.task = 'kill|' + monster;
-
-  var qty = 1;
-  if (level-lev > 10) {
-    // lev is too low. multiply...
-    qty = Math.floor((level + Random(lev)) / Max(lev,1));
-    if (qty < 1) qty = 1;
-    level = Math.floor(level / qty);
-  }
-
-  if ((level - lev) <= -10) {
-    result = 'imaginary ' + result;
-  } else if ((level-lev) < -5) {
-    i = 10+(level-lev);
-    i = 5-Random(i+1);
-    result = Sick(i,Young((lev-level)-i,result));
-  } else if (((level-lev) < 0) && (Random(2) == 1)) {
-    result = Sick(level-lev,result);
-  } else if (((level-lev) < 0)) {
-    result = Young(level-lev,result);
-  } else if ((level-lev) >= 10) {
-    result = 'messianic ' + result;
-  } else if ((level-lev) > 5) {
-    i = 10-(level-lev);
-    i = 5-Random(i+1);
-    result = Big(i,Special((level-lev)-i,result));
-  } else if (((level-lev) > 0) && (Random(2) == 1)) {
-    result = Big(level-lev,result);
-  } else if (((level-lev) > 0)) {
-    result = Special(level-lev,result);
-  }
-
-  lev = level;
-  level = lev * qty;
-
-  if (!definite) result = Indefinite(result, qty);
-  return { 'description': result, 'level': level };
-}
-
-
-
-
-
-
-
 
 */
 

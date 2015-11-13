@@ -8,7 +8,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 	});
 })
 
-.controller('GameController', ['Assets', 'Names', 'Tasks', function GameController(Assets, Names, Tasks) {
+.controller('GameController', ['Names', 'Tasks', function GameController(Names, Tasks) {
 	var game = this;
 
 	game.vars = {};
