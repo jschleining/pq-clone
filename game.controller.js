@@ -51,7 +51,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
             var carryOver = (currentBar.currentValue + currentBar.updateValue) - game.vars.barSettings.max;
             currentBar.currentValue = game.vars.barSettings.min + carryOver;
             currentBar.displayValue = (currentBar.currentValue / game.vars.barSettings.max) * 100;
-            game.vars.currentTask = Assets.getTask();
+            game.vars.currentTask = Tasks.getTask();
 
            /* if (currentBar.updateBar) {
                 game.methods.updateProgressBar(currentBar.updateBar);

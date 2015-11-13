@@ -70,7 +70,6 @@ angular.module('pq-clone')
   * Returns the plural form of a word.
   */
   function pluralize_(_string) {
-    console.log('Pluralize: ', _string);
     if (endsWith(_string, 'y')) {
       return getSubString(_string, 1, getLength(_string) - 1) + 'ies';
     } else if (endsWith(_string, 'us')) {
@@ -118,6 +117,27 @@ angular.module('pq-clone')
 
 })
 
+/*
+
+
+function SpecialItem() {
+  return interestingItem() + ' of ' + Pick(K.ItemOfs);
+}
+
+function interestingItem() {
+  return Pick(K.ItemAttrib) + ' ' + Pick(K.Specials);
+}
+
+function BoringItem() {
+  return Pick(K.BoringItems);
+}
+
+
+function Pick(a) {
+  return a[Random(a.length)];
+}
+
+*/
 
 /*
 
