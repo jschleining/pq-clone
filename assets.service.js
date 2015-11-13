@@ -2,10 +2,10 @@ angular.module('pq-clone')
 
 .service('Assets', ['QuestItems', 'QuestMonsters', 'Utilities', 'GameConstants', function(QuestItems, QuestMonsters, Utilities, GameConstants) {
 	var service_ = this;
-  service_.getTask = getTask_;
-  service_.getRandomInt = getRandomInt_;
+  /*service_.getTask = getTask_;
+  service_.getRandomInt = getRandomInt_;*/
 
-  function getTask_() {
+  /*function getTask_() {
     var quests = GameConstants.TASK_TYPES;
     var quest = null;
     var questTarget = null;
@@ -42,7 +42,7 @@ angular.module('pq-clone')
 
   function getRandomInt_(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+  }*/
 
 }])  
 
@@ -50,12 +50,6 @@ angular.module('pq-clone')
 
 
 /*
- caption = 'Exterminate ' + Definite(Split(game.questmonster,0),2);
-  caption = 'Seek ' + Definite(InterestingItem(), 1);
-  caption = 'Deliver this ' + BoringItem();
- caption = 'Fetch me ' + Indefinite(BoringItem(), 1);
-  caption = 'Placate ' + Definite(Split(game.questmonster,0),2);
-
 
 function CompleteQuest() {
   QuestBar.reset(50 + RandomLow(1000));

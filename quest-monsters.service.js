@@ -7,6 +7,14 @@ angular.module('pq-clone')
   service_.getMonster = getMonster_;
   service_.getRandomInt = getRandomInt_;
 
+  // TODO (JSchleining): Do this better.
+  service_.getBasicMonster = getBasicMonster_;
+  function getBasicMonster_() {
+    var m = service_.getMonster('MONSTER_MANUAL');
+    var rarity = 0;
+    return {target: m, rarity: rarity}
+  }
+
   // TODO: Optimize this. I think it can be done better.
   function getQuestMonster_() {
     var m = '';
