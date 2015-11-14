@@ -18,55 +18,55 @@ angular.module('pq-clone')
       }
     }
     var array = GameConstants[_type];
-    var item = array[Math.floor(Math.random() * array.length)];
-    var returnItem = {
-      target: item.name, 
-      rarity: item.modifier
+    var asset = array[Math.floor(Math.random() * array.length)];
+    var returnAsset = {
+      target: asset.name, 
+      rarity: asset.modifier
     };
-    return returnItem;
+    return returnAsset;
   }
 
   // TODO (JSchleining): how many of these functions could actually be combined?
   function getPrefixedItem_(_type) {
     var mod = service_.getItemModifier('QUEST_ITEM_PREFIXES');
-    var item = service_.getBasicItem(_type);
-    var returnItem = {
-      target: mod.name + ' ' + item.target, 
-      rarity: item.rarity + mod.modifier
+    var asset = service_.getBasicItem(_type);
+    var returnAsset = {
+      target: mod.name + ' ' + asset.target, 
+      rarity: asset.rarity + mod.modifier
     };
-    return returnItem;
+    return returnAsset;
   }
 
   function getSuffixedItem_(_type) {
     var mod = service_.getItemModifier('QUEST_ITEM_SUFFIXES');
-    var item = service_.getBasicItem(_type);
-    var returnItem = {
-      target: item.target + ' of ' + mod.name, 
-      rarity: item.rarity + mod.modifier
+    var asset = service_.getBasicItem(_type);
+    var returnAsset = {
+      target: asset.target + ' of ' + mod.name, 
+      rarity: asset.rarity + mod.modifier
     };
-    return returnItem;
+    return returnAsset;
   }
 
   function getSpecialItem_(_type) {
     var mod_1 = service_.getItemModifier('QUEST_ITEM_PREFIXES');
     var mod_2 = service_.getItemModifier('QUEST_ITEM_SUFFIXES');
-    var item = service_.getBasicItem(_type);
-    var returnItem = {
-      target: mod_1.name + ' ' + item.target + ' of ' + mod_2.name, 
-      rarity: item.rarity + mod_1.modifier + mod_2.modifier
+    var asset = service_.getBasicItem(_type);
+    var returnAsset = {
+      target: mod_1.name + ' ' + asset.target + ' of ' + mod_2.name, 
+      rarity: asset.rarity + mod_1.modifier + mod_2.modifier
     };
-    return returnItem;
+    return returnAsset;
   }
 
   // TODO (JSchleining): how many of these get functions can actually be merged?
   function getItemModifier_(_type) {
     var array = GameConstants[_type];
-    var item = array[Math.floor(Math.random() * array.length)];
-    var returnItem = {
-      name: item.name, 
-      modifier: item.modifier
+    var asset = array[Math.floor(Math.random() * array.length)];
+    var returnAsset = {
+      name: asset.name, 
+      modifier: asset.modifier
     };
-    return returnItem;
+    return returnAsset;
   }
 
 }])

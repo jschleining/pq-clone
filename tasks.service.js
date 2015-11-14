@@ -1,6 +1,6 @@
 angular.module('pq-clone')
 
-.service('Tasks', ['QuestMonsters', 'GameConstants', 'Utilities', 'Items',  function(QuestMonsters, GameConstants, Utilities, Items) {
+.service('Tasks', ['QuestMonsters', 'GameConstants', 'Utilities', 'Items', 'Monsters',  function(QuestMonsters, GameConstants, Utilities, Items, Monsters) {
 	var service_ = this;
   service_.getTask = getTask_;
 
@@ -14,15 +14,15 @@ angular.module('pq-clone')
     quest = quests[baseType][Math.floor(Math.random() * quests[baseType].length)];
 
     if (baseType == 'FIGHT') {
-      questTarget = QuestMonsters.getQuestMonster();
+      questTarget = Monsters.getMonster();
       //  Random number between 1 and 3 monsters
       var qty = Utilities.getRandomInt(1, 3);
 
-      quest[2] = Utilities.indefiniteArticle(questTarget.target.creature, qty);
+      quest[2] = Utilities.indefiniteArticle(questTarget.target, qty);
 
       // pluralize after getting definite or indefinite
       if (qty > 1) {
-        questTarget.target.creature = qty + ' ' + Utilities.pluralize(questTarget.target.creature);
+        questTarget.target = qty + ' ' + Utilities.pluralize(questTarget.target);
       }
     } else if (baseType == 'FIND') {
       var rnd = Utilities.getRandomInt(1, 100);
@@ -61,12 +61,12 @@ angular.module('pq-clone')
       }
     } else if (baseType == 'DIPLOMACY') {
       // TODO (JSchleining):Temporary. Do this better.
-      questTarget = QuestMonsters.getBasicMonster();
+      questTarget = Monsters.getBasicMonster();
 
-      quest[2] = Utilities.definiteArticle(questTarget.target.creature, 1);
-      questTarget.target.creature = Utilities.pluralize(questTarget.target.creature);
+      quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+      questTarget.target = Utilities.pluralize(questTarget.target);
     }
-
+    
     return {baseType: baseType, questType: quest, target: questTarget};
   }
 
