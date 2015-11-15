@@ -1,73 +1,78 @@
 angular.module('pq-clone')
 
-.service('Tasks', ['QuestMonsters', 'GameConstants', 'Utilities', 'Items', 'Monsters',  function(QuestMonsters, GameConstants, Utilities, Items, Monsters) {
+.service('Tasks', ['GameConstants', 'Utilities', 'Items', 'Monsters',  function(GameConstants, Utilities, Items, Monsters) {
 	var service_ = this;
-  service_.getTask = getTask_;
+  service_.getRandomTask = getRandomTask_;
+  service_.getFightTask = getFightTask_;
 
-  function getTask_() {
-    var quests = GameConstants.TASK_TYPES;
-    var quest;
-    var questTarget;
+  function getRandomTask_() {
+    var tasks = GameConstants.TASK_TYPES;
+    var task;
+    var taskTarget;
     var baseType = getTaskType();
     
-    
-    quest = quests[baseType][Math.floor(Math.random() * quests[baseType].length)];
+    task = tasks[baseType][Math.floor(Math.random() * tasks[baseType].length)];
 
     if (baseType == 'FIGHT') {
-      questTarget = Monsters.getMonster();
+      taskTarget = Monsters.getMonster();
       //  Random number between 1 and 3 monsters
       var qty = Utilities.getRandomInt(1, 3);
 
-      quest[2] = Utilities.indefiniteArticle(questTarget.target, qty);
+      task[2] = Utilities.indefiniteArticle(taskTarget.target, qty);
 
       // pluralize after getting definite or indefinite
       if (qty > 1) {
-        questTarget.target = qty + ' ' + Utilities.pluralize(questTarget.target);
+        taskTarget.target = qty + ' ' + Utilities.pluralize(taskTarget.target);
       }
     } else if (baseType == 'FIND') {
       var rnd = Utilities.getRandomInt(1, 100);
 
       if (rnd < 10) {
-        questTarget = Items.getSpecialItem();
+        taskTarget = Items.getSpecialItem();
        } else if (rnd >= 10 && rnd < 25) {
-        questTarget = Items.getPrefixedItem();
+        taskTarget = Items.getPrefixedItem();
       } else if (rnd >= 25 && rnd < 41) {
-        questTarget = Items.getSuffixedItem();
+        taskTarget = Items.getSuffixedItem();
       } else if (rnd >= 41 && rnd < 66) {
-        questTarget = Items.getBasicItem('QUEST_ITEMS_SPECIAL');
+        taskTarget = Items.getBasicItem('QUEST_ITEMS_SPECIAL');
       } else {
-        questTarget = Items.getBasicItem('QUEST_ITEMS_MUNDANE');
+        taskTarget = Items.getBasicItem('QUEST_ITEMS_MUNDANE');
       }
 
-      if (questTarget.rarity < 2) {
-        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      if (taskTarget.rarity < 2) {
+        task[2] = Utilities.indefiniteArticle(taskTarget.target, 1);
       } else {
-        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+        task[2] = Utilities.definiteArticle(taskTarget.target, 1);
       }
     } else if (baseType == 'RETRIEVE') {
-      questTarget = Items.getPrefixedItem();
-      if (questTarget.rarity < 2) {
-        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      taskTarget = Items.getPrefixedItem();
+      if (taskTarget.rarity < 2) {
+        task[2] = Utilities.indefiniteArticle(taskTarget.target, 1);
       } else {
-        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+        task[2] = Utilities.definiteArticle(taskTarget.target, 1);
       }
     } else if (baseType == 'GIVE') {
-      questTarget = Items.getBasicItem('QUEST_ITEMS_MUNDANE');
+      taskTarget = Items.getBasicItem('QUEST_ITEMS_MUNDANE');
 
-      if (questTarget.rarity < 2) {
-        quest[2] = Utilities.indefiniteArticle(questTarget.target, 1);
+      if (taskTarget.rarity < 2) {
+        task[2] = Utilities.indefiniteArticle(taskTarget.target, 1);
       } else {
-        quest[2] = Utilities.definiteArticle(questTarget.target, 1);
+        task[2] = Utilities.definiteArticle(taskTarget.target, 1);
       }
     } else if (baseType == 'DIPLOMACY') {
       // TODO (JSchleining):Temporary. Do this better.
-      questTarget = Monsters.getBasicMonster();
+      taskTarget = Monsters.getBasicMonster();
 
-      quest[2] = Utilities.definiteArticle(questTarget.target, 1);
-      questTarget.target = Utilities.pluralize(questTarget.target);
+      task[2] = Utilities.definiteArticle(taskTarget.target, 1);
+      taskTarget.target = Utilities.pluralize(taskTarget.target);
     }
     
-    return {baseType: baseType, questType: quest, target: questTarget};
+    return {baseType: baseType, taskType: task, target: taskTarget};
+  }
+
+  function getFightTask_(_target) {
+    var baseType = 'FIGHT';
+    
   }
 
   function getTaskType() {

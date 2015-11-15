@@ -2,7 +2,6 @@ angular.module('pq-clone')
 
 .service('Items', ['GameConstants', 'Utilities', function(GameConstants, Utilities) {
 	var service_ = this;
-
   service_.getBasicItem = getBasicItem_;
   service_.getPrefixedItem = getPrefixedItem_;
   service_.getSuffixedItem = getSuffixedItem_;

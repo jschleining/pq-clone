@@ -1,8 +1,17 @@
 <div layout="row" layout-padding>
-	<div>Name: {{gc.vars.currentName}}</div>
+	<div>Name: {{gc.vars.character.GetName()}}</div>
 </div>
 <div layout="row" layout-padding>
-	Quest: {{gc.vars.currentTask.questType[0]}} {{gc.vars.currentTask.questType[2]}}&nbsp;
+	<div>Race: {{gc.vars.character.GetRace().name}}</div>
+</div>
+<div layout="row" layout-padding>
+	<div>Class: {{gc.vars.character.GetClass().name}}</div>
+</div>
+<div layout="row" layout-padding>
+	<div>Level: {{gc.vars.character.GetLevel()}}</div>
+</div>
+<div layout="row" layout-padding>
+	Quest: {{gc.vars.currentTask.taskType[0]}} {{gc.vars.currentTask.taskType[2]}}&nbsp;
 
 	<span 	ng-class="	{	challenge_0: 	((	gc.vars.currentTask.baseType === 'FIGHT' ||
 												gc.vars.currentTask.baseType === 'DIPLOMACY') && 
@@ -56,7 +65,7 @@
 <md-progress-linear md-mode="determinate" value="{{gc.vars.progressBars.taskDisplay.displayValue}}" layout="row" layout-padding></md-progress-linear>
 
 <div layout="row" layout-padding>
-	{{gc.vars.currentTask.questType[1]}} {{gc.vars.currentTask.questType[2]}}&nbsp;
+	{{gc.vars.currentTask.taskType[1]}} {{gc.vars.currentTask.taskType[2]}}&nbsp;
 		<span 	ng-class="	{	challenge_0: 	((	gc.vars.currentTask.baseType === 'FIGHT' ||
 												gc.vars.currentTask.baseType === 'DIPLOMACY') && 
 												gc.vars.currentTask.target.rarity === -4),

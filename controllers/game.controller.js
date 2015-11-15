@@ -4,20 +4,19 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 	$stateProvider.state('index', {
 		url: '',
 		controller: 'GameController as gc',
-		templateUrl: 'game.template.html'
+		templateUrl: 'templates/game.template.html'
 	});
 })
 
-.controller('GameController', ['Names', 'Tasks', function GameController(Names, Tasks) {
+.controller('GameController', ['Names', 'Tasks', 'Character', function GameController(Names, Tasks, Character) {
 	var game = this;
 
 	game.vars = {};
 	game.methods = {};
 	game.services = {};
 
-	game.vars.stuff = 42;
+	game.vars.character = '';
 	game.vars.currentTask = '';
-    game.vars.currentName = '';
 
 	game.vars.barSettings = {
         min: 0,
@@ -34,8 +33,8 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
     };
 
     game.methods.init = function () {
-		game.vars.currentTask = Tasks.getTask();
-        game.vars.currentName = Names.getName();
+        game.vars.character = new Character();
+		game.vars.currentTask = Tasks.getRandomTask();
     };
     
 	game.methods.click = function () {

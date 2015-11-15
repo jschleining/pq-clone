@@ -2,26 +2,27 @@ angular.module('pq-clone')
 
 .service('Monsters', ['GameConstants', 'Utilities', function(GameConstants, Utilities) {
 	var service_ = this;
-
   service_.getBasicMonster = getBasicMonster_;
   service_.getMonster = getMonster_;
   service_.getMonsterModifier = getMonsterModifier_;
 
   // TODO (JSchleining): implement luck + level
-  function getBasicMonster_(_type) {
+  function getBasicMonster_(_type, _asset) {
+    //_type = (_type !== null) ? _type: 'MONSTER_MANUAL';
     _type = _type || 'MONSTER_MANUAL';
     var array = GameConstants[_type];
-    var asset = array[Math.floor(Math.random() * array.length)];
+    var asset = _asset || array[Math.floor(Math.random() * array.length)];
     var rarity = 0;
+    
     var returnAsset = {target: asset.name, cr: asset.cr, reward: asset.reward, rarity: rarity};
     return returnAsset;
   }
 
   // TODO: Optimize this. I think it can be done better. Also, update it later once level is figured in
-  function getMonster_() {
+  function getMonster_(_asset) {
     var mod_1 = {name: '', modifier: 0};
     var mod_2 = {name: '', modifier: 0};
-    var asset = service_.getBasicMonster();
+    var asset = _asset || service_.getBasicMonster();
 
     if (Utilities.getRandomInt(1, 100) < 51) {
       var p = service_.getMonsterModifier('MONSTER_PREFIXES');

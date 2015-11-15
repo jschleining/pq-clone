@@ -209,6 +209,7 @@ angular.module('pq-clone')
                         {name: 'undead', modifier: 1},
                      ],
   MONSTER_MANUAL: [ // TODO: Make this more sophisticated - use proper CRs, treasure, rarity, grouping, type, subtype, etc
+                    // TODO: {name: '', crLow: 0, crHigh: 10, type: '', subTypes: [], align: '', advancement: '', treasure: 'triple std', organization: []}
                     {name: 'ant', cr: 0, reward: 'antenna'},
                     {name: 'beagle', cr: 0, reward: 'collar'},
                     {name: 'bunny', cr: 0, reward: 'ear'},
@@ -355,7 +356,6 @@ angular.module('pq-clone')
                     {name: 'spectre', cr: 7, reward: 'vestige'},
                     {name: 'wyvern', cr: 7, reward: 'wing'},
                     {name: 'xorn', cr: 7, reward: 'jaw'},
-                    {name: '', cr: 7, reward: ''},
 
                     {name: 'balor', cr: 8, reward: 'whip'},
                     {name: 'barbed devil', cr: 8, reward: 'flame'},
@@ -753,9 +753,11 @@ angular.module('pq-clone')
   TASK_TYPES: {
                 FIGHT:  [
                           ['slay', 'slaying'],
-                          ['execute', 'executing'],
-                          ['exterminate', 'exterminating']
+                          ['execute', 'executing']
                         ],
+                EXTERMINATE:    [
+                                    ['exterminate', 'exterminating']
+                                ],
                 FIND: [
                         ['locate', 'locating'],
                         ['find', 'finding'],
