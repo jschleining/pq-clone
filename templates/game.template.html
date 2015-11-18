@@ -11,6 +11,9 @@
 	<div>Level: {{gc.vars.character.GetLevel()}}</div>
 </div>
 <div layout="row" layout-padding>
+	<div>XP: {{gc.vars.character.GetXP()}} / {{gc.vars.character.GetXPToNext()}}</div>
+</div>
+<div layout="row" layout-padding>
 	Quest: {{gc.vars.currentTask.taskType[0]}} {{gc.vars.currentTask.taskType[2]}}&nbsp;
 
 	<span 	ng-class="	{	challenge_0: 	((	gc.vars.currentTask.baseType === 'FIGHT' ||
@@ -113,6 +116,9 @@
 			{{gc.vars.currentTask.target.target}}
 		</span>
 	</span>
+</div>
+<div layout="row" layout-padding>
+	<div>Quest: {{gc.vars.quest}}</div>
 </div>
 
 <md-button class="md-raised md-primary" ng-click="gc.methods.click()">Click Me</md-button>

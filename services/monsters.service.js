@@ -7,13 +7,31 @@ angular.module('pq-clone')
   service_.getMonsterModifier = getMonsterModifier_;
 
   // TODO (JSchleining): implement luck + level
-  function getBasicMonster_(_type, _asset) {
-    //_type = (_type !== null) ? _type: 'MONSTER_MANUAL';
-    _type = _type || 'MONSTER_MANUAL';
-    var array = GameConstants[_type];
-    var asset = _asset || array[Math.floor(Math.random() * array.length)];
-    var rarity = 0;
-    
+  function getBasicMonster_(_params) {
+    var type;
+    if (!_params.type) {
+      type = 'MONSTER_MANUAL';
+    } else {
+      type = _params.type;
+    }
+    var baseArray = GameConstants[type];
+    var array = [];
+    var level = _params.level || 1;
+    var rarity = _params.rarity || 0;
+    for(var i = 0; i < baseArray.length; i++) { // modify this to add modifiers to match requirements, even allowing cr < 0
+      if (level + _params.modifier > 0) {
+        if (baseArray[i].cr === (level + _params.modifier)) {
+          array.push(baseArray[i]);
+        }
+      } else {
+        if (baseArray[i].cr === 0) {
+          array.push(baseArray[i]);
+        }
+      }
+      
+    }
+    console.log('_params', _params, 'array', array);
+    var asset = _params.asset || array[Math.floor(Math.random() * array.length)];
     var returnAsset = {target: asset.name, cr: asset.cr, reward: asset.reward, rarity: rarity};
     return returnAsset;
   }
@@ -22,7 +40,7 @@ angular.module('pq-clone')
   function getMonster_(_asset) {
     var mod_1 = {name: '', modifier: 0};
     var mod_2 = {name: '', modifier: 0};
-    var asset = _asset || service_.getBasicMonster();
+    var asset = _asset || service_.getBasicMonster({level: 1, modifier: 1}); // get actual character level here
 
     if (Utilities.getRandomInt(1, 100) < 51) {
       var p = service_.getMonsterModifier('MONSTER_PREFIXES');

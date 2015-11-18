@@ -8,7 +8,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 	});
 })
 
-.controller('GameController', ['Names', 'Tasks', 'Character', function GameController(Names, Tasks, Character) {
+.controller('GameController', ['Names', 'Tasks', 'Character', 'Quests', function GameController(Names, Tasks, Character, Quests) {
 	var game = this;
 
 	game.vars = {};
@@ -17,6 +17,7 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 
 	game.vars.character = '';
 	game.vars.currentTask = '';
+    game.vars.quest = '';
 
 	game.vars.barSettings = {
         min: 0,
@@ -34,6 +35,8 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
 
     game.methods.init = function () {
         game.vars.character = new Character();
+        console.log('CHAR LEVEL', game.vars.character.GetLevel());
+        game.vars.quest = Quests.getQuest(game.vars.character.GetLevel());
 		game.vars.currentTask = Tasks.getRandomTask();
     };
     
@@ -50,7 +53,9 @@ angular.module('pq-clone', ['ui.router', 'ngMaterial'])
             var carryOver = (currentBar.currentValue + currentBar.updateValue) - game.vars.barSettings.max;
             currentBar.currentValue = game.vars.barSettings.min + carryOver;
             currentBar.displayValue = (currentBar.currentValue / game.vars.barSettings.max) * 100;
-            game.vars.currentTask = Tasks.getTask();
+            game.vars.currentTask = Tasks.getRandomTask();
+
+            game.vars.quest = Quests.getQuest(game.vars.character.GetLevel());
 
            /* if (currentBar.updateBar) {
                 game.methods.updateProgressBar(currentBar.updateBar);

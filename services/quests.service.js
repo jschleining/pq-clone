@@ -2,49 +2,96 @@ angular.module('pq-clone')
 
 .service('Quests', ['GameConstants', 'Utilities', 'Monsters',  function(GameConstants, Utilities, Monsters) {
 	var service_ = this;
-  var service_.questBaseValue = 10000;
-  var service_.taskBaseValue = 1000;
+  service_.questBaseValue = 10000;
+  service_.taskBaseValue = 1000;
 
-  var service_.currentQuestType;
-  var service_.currentQuestTarget;
-  var service_.currentQuestValue;
+  service_.currentQuestType;
+  service_.currentQuestTarget;
+  service_.currentQuestValue;
 
 
-  var service_.getQuestType = getQuestType_;
-  var service_.getQuest = getQuest_;
+  service_.getQuestType = getQuestType_;
+  service_.getQuest = getQuest_;
+
+  service_.getRarity = getRarity_;
   // TODO (JSchleining): Implement beginning, middle, and end tasks, as well as current target.
   // TODO (JSchleining): Implement ability to choose specific quests and pass parameters
   //                      such as enemy type, item type, etc.
 
   // TODO (JSchleining): Add Unique. Implement difficulty.
-  var difficultyMod = [
-    {name: 'trivial', modifier: -4, multiplier: .2},
-    {name: 'minor', modifier: -3, multiplier: .4},
-    {name: 'very easy ', modifier: -2, multiplier: .6},
-    {name: 'easy', modifier: -1, multiplier: .8},
-    {name: 'normal', modifier: -0, multiplier: 1},
-    {name: 'hard', modifier: 1, multiplier: 1.2},
-    {name: 'very hard', modifier: 2, multiplier: 1.4},
-    {name: 'extreme', modifier: 3, multiplier: 1.6},
-    {name: 'legendary', modifier: 4, multiplier: 1.8},
+  service_.difficultyMod = [
+    {name: 'trivial', modifier: -4, multiplier: .2, rarity: 2},
+    {name: 'minor', modifier: -3, multiplier: .4, rarity: 1},
+    {name: 'very easy ', modifier: -2, multiplier: .6, rarity: 1},
+    {name: 'easy', modifier: -1, multiplier: .8, rarity: 0},
+    {name: 'normal', modifier: 0, multiplier: 1, rarity: 0},
+    {name: 'hard', modifier: 1, multiplier: 1.2, rarity: 1},
+    {name: 'very hard', modifier: 2, multiplier: 1.4, rarity: 2},
+    {name: 'extreme', modifier: 3, multiplier: 1.6, rarity: 3},
+    {name: 'legendary', modifier: 4, multiplier: 1.8, rarity: 4},
   ];
 
-  function getQuest_() {
-    service_.currentQuestType = getTaskType();
+  function getRarity_() {
+    var rand = Utilities.getRandomInt(1, 100);
+    var options = [];
 
-    if(questType === 'EXTERMINATE') {
-      service_.currentQuestTarget = Monsters.getBasicMonster();
+    if (rand <= 30) {
+      for(var i = 0; i < service_.difficultyMod.length; i++) {
+        if(service_.difficultyMod[i].rarity === 0) {
+          options.push(service_.difficultyMod[i]);
+        }
+      }
+    }
+    if (rand > 30 && rand <= 55) {
+      for(var i = 0; i < service_.difficultyMod.length; i++) {
+        if(service_.difficultyMod[i].rarity === 1) {
+          options.push(service_.difficultyMod[i]);
+        }
+      }
+    }
+    if (rand > 55 && rand <= 75) {
+      for(var i = 0; i < service_.difficultyMod.length; i++) {
+        if(service_.difficultyMod[i].rarity === 2) {
+          options.push(service_.difficultyMod[i]);
+        }
+      }
+    }
+    if (rand > 75 && rand <= 90) {
+      for(var i = 0; i < service_.difficultyMod.length; i++) {
+        if(service_.difficultyMod[i].rarity === 3) {
+          options.push(service_.difficultyMod[i]);
+        }
+      }
+    }
+    if (rand > 90) {
+      for(var i = 0; i < service_.difficultyMod.length; i++) {
+        if(service_.difficultyMod[i].rarity === 4) {
+          options.push(service_.difficultyMod[i]);
+        }
+      }
+    }
+
+    return options[Math.floor(Math.random() * options.length)];
+  }
+
+  function getQuest_(_level) {
+    var type_ = service_.getQuestType();
+    var rarity_ = service_.getRarity();
+
+    if(type_ === 'EXTERMINATE') {
+      service_.currentQuestTarget = Monsters.getBasicMonster({level: _level, modifier: rarity_.modifier});
       // TODO (JSchleining): Set Quest Value; add modification later.
       service_.currentQuestValue = service_.questBaseValue;
 
-    } else if (questType === 'RETRIEVE') {
+    } else if (type_ === 'RETRIEVE') {
 
-    } else if (questType === 'GIVE') {
+    } else if (type_ === 'GIVE') {
       
-    } else if (questType === 'DIPLOMACY') {
+    } else if (type_ === 'DIPLOMACY') {
       
     }
 
+    return {target: service_.currentQuestTarget, rarity: rarity_};
   }
 
   function getQuestType_() {

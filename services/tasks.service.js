@@ -61,7 +61,7 @@ angular.module('pq-clone')
       }
     } else if (baseType == 'DIPLOMACY') {
       // TODO (JSchleining):Temporary. Do this better.
-      taskTarget = Monsters.getBasicMonster();
+      taskTarget = Monsters.getBasicMonster({level: 1, modifier: 1}); // pass actual character level here
 
       task[2] = Utilities.definiteArticle(taskTarget.target, 1);
       taskTarget.target = Utilities.pluralize(taskTarget.target);
