@@ -20,7 +20,7 @@ angular.module('pq-clone')
     var rarity = _params.rarity || 0;
     for(var i = 0; i < baseArray.length; i++) { // modify this to add modifiers to match requirements, even allowing cr < 0
       if (level + _params.modifier > 0) {
-        if (baseArray[i].cr === (level + _params.modifier)) {
+        if (baseArray[i].cr === (level + _params.rarity)) {
           array.push(baseArray[i]);
         }
       } else {
@@ -40,7 +40,7 @@ angular.module('pq-clone')
   function getMonster_(_asset) {
     var mod_1 = {name: '', modifier: 0};
     var mod_2 = {name: '', modifier: 0};
-    var asset = _asset || service_.getBasicMonster({level: 1, modifier: 1}); // get actual character level here
+    var asset = _asset || service_.getBasicMonster({level: 1, rarity: 1}); // get actual character level here
 
     if (Utilities.getRandomInt(1, 100) < 51) {
       var p = service_.getMonsterModifier('MONSTER_PREFIXES');

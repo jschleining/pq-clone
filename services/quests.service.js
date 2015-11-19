@@ -79,7 +79,7 @@ angular.module('pq-clone')
     var rarity_ = service_.getRarity();
 
     if(type_ === 'EXTERMINATE') {
-      service_.currentQuestTarget = Monsters.getBasicMonster({level: _level, modifier: rarity_.modifier});
+      service_.currentQuestTarget = Monsters.getBasicMonster({level: _level, rarity: rarity_.modifier});
       // TODO (JSchleining): Set Quest Value; add modification later.
       service_.currentQuestValue = service_.questBaseValue;
 
